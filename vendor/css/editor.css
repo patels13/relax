@@ -109,7 +109,7 @@ you can use the generic selector below, but it's slower:
 }
 
 .CodeMirror-scrollbar-filler {
-  background-color: white; /* The little square between H and V scrollbars */
+  background-color: blue; /* The little square between H and V scrollbars */
 }
 
 /* CURSOR */
