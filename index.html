@@ -47,9 +47,10 @@
 			<hr>
 			<div class="toolbar">
 				<p id="btn-save-wrapper"><a id="btn-save" href="#"><i class="glyphicon glyphicon-save"></i> Save as...</a></p>
+                <p id="document-list"></p>
 				<hr>
 				<p><i class="glyphicon glyphicon-open"></i> Open</p>
-				<p id="document-list"></p>
+				
 			</div>
 			<hr>
 			<small class="notes">made with love by <a href="http://jehaisleprintemps.net">Bruno Bord</a> - &copy; 2014. Grab <a href="https://github.com/brunobord/relax">the source on Github</a>, inspired by the fantastic concept of <a href="http://noisli.com">Noisli.com</a></small>
@@ -173,8 +174,11 @@ $(document).ready(function() {
 				}
 			}
 		}
-		localStorage[prefix+':'+name] = localStorage[prefix];
-		loadDocuments();
+        
+        if (name != null) {
+		  localStorage[prefix+':'+name] = localStorage[prefix];
+		  loadDocuments();
+        }
 	});
 
 function destroyClickedElement(event) {
