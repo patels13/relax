@@ -8,7 +8,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-	<link rel="stylesheet" href="vendor/css/grid.min.css" type-"text/css">
+	<link rel="stylesheet" href="vendor/css/grid.min.css" type="text/css">
 	<link rel="stylesheet" href="vendor/css/meteo/stylesheet.min.css" type="text/css">
 	<link rel="stylesheet" href="vendor/css/fontello/fontello.min.css" type="text/css">
 	<link rel="stylesheet" href="vendor/css/glyphicons.min.css" type="text/css">
@@ -16,6 +16,16 @@
 	<link rel="stylesheet" href="static/css/fitgrd.pack.css" type="text/css">
 	<link rel="stylesheet" href="static/css/style.min.css" type="text/css">
 	<link rel="stylesheet" href="static/css/preview.min.css" type="text/css">
+    
+    <style>
+        #drop_zone {
+            min-height: auto;
+            width: auto;
+            border: 1px solid blue;
+            margin: auto;
+            padding: auto;
+        }
+    </style>
 </head>
 <body>
 <div class="wrapper">
@@ -49,7 +59,16 @@
 				<p id="btn-save-wrapper"><a id="btn-save" href="#"><i class="glyphicon glyphicon-save"></i> Save as...</a></p>
                 <p id="document-list"></p>
 				<hr>
-				<p><i class="glyphicon glyphicon-open"></i> Open</p>
+				<p><i class="glyphicon glyphicon-open"></i> Upload</p>
+                <p id="document-list2"></p>
+                
+                <div class="drop_class">
+                    <div id="drop_zone">Drop files here.</div>
+                    <output id="file_list2">
+                    
+                    </output>
+                </div>
+                
 				
 			</div>
 			<hr>
@@ -103,9 +122,8 @@ $(document).ready(function() {
 		myEditor.element.value = myEditor.codemirror.getValue();
 		localStorage[prefix] = myEditor.element.value;
 	}, 500);
-
-
-	function loadDocuments() {
+    
+    function loadDocuments() {
 		// clear the list
 		$('#document-list').html('');
 		// load from localStorage
@@ -158,6 +176,34 @@ $(document).ready(function() {
 	})
 
 	}
+    
+    function handleFileSelect(evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+        
+        var files = evt.dataTransfer.files;
+        
+        var output = [];
+        for (var i = 0, f; f = files[i]; ++i) {
+            localStorage[prefix+':'+name] = localStorage[prefix];
+            output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+                  f.size, ' bytes, last modified: ',
+                  f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+                  '</li>');
+            loadDocuments();
+        }
+        document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+  }
+
+  function handleDragOver(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+    evt.dataTransfer.dropEffect = 'copy';
+  }
+    
+  var dropZone = document.getElementById('drop_zone');
+  dropZone.addEventListener('dragover', handleDragOver, false);
+  dropZone.addEventListener('drop', handleFileSelect, false);
 
 	loadDocuments();
 
@@ -176,8 +222,8 @@ $(document).ready(function() {
 		}
         
         if (name != null) {
-		  localStorage[prefix+':'+name] = localStorage[prefix];
-		  loadDocuments();
+            var data = myEditor.codemirror.doc.getValue();
+            saveTextAsFile(name,name + ".md");
         }
 	});
 
