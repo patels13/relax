@@ -27,7 +27,7 @@
         }
     </style>
 </head>
-<body>
+<body bgcolor=lightblue>
 <div class="wrapper">
 
 <header>
@@ -80,6 +80,29 @@
 </section>
 
 </div> <!-- /wrapper -->
+<div class="center">  
+    <form name="myform">
+        <select name = "list" onclick="changecolor()" >
+            <option value = "lightblue"> Focus Blue </option>]
+            <option value = "#ffe44d"> Creative Yellow </option>
+            <option value = "#ff3333"> Passion Red </option>
+            <option value = "#66ff33"> Go Green </option>
+            
+        </select>
+    </form>
+   </div>
+ </body>
+
+<script type="text/javascript">
+function changecolor()
+{
+    var clr = document.myform.list.value;
+document.bgColor=clr;
+}
+    
+</script> 
+
+
 
 
 <script type="text/javascript" src="vendor/js/jquery.min.js"></script>
