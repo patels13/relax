@@ -64,6 +64,8 @@
   max-width: 1024px;
   margin: auto;
 }
+
+
 .editor-wrapper {
   max-width: 700px;
   margin: auto;
@@ -101,7 +103,12 @@ body {
 }
 .sidebar a.playing {
   color: rgb(110, 40, 40);
+  margin-bottom: =80px;
 }
 .notes a {
   text-decoration: underline;
+}
+
+div.fg2.sidebar {
+    width: 400px;
 }
